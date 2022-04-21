@@ -51,7 +51,17 @@ const ExpensesOverview = () => {
           ),
         }}
       />
-      <BottomTabs.Screen name="AllExpenses" component={AllExpensesScreen} />
+      <BottomTabs.Screen
+        name="AllExpenses"
+        component={AllExpensesScreen}
+        options={{
+          title: "All Expenses",
+          tabBarLabel: "All Expenses",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="hourglass" color={color} size={size} />
+          ),
+        }}
+      />
     </BottomTabs.Navigator>
   );
 };
