@@ -4,6 +4,7 @@ import IconButton from "../components/UI/IconButton";
 import { GLOBAL_STYLES } from "../constants/styles";
 import Button from "../components/UI/Button";
 import { ExpensesContext } from "../store/expenses-context";
+import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 
 const ManageExpenseScreen = ({ route, navigation }) => {
   const expensesCtx = useContext(ExpensesContext);
@@ -28,18 +29,23 @@ const ManageExpenseScreen = ({ route, navigation }) => {
     navigation.goBack();
   };
 
-  const confirmHandler = () => {
+  const confirmHandler = (data) => {
+    console.log({
+      description: data.description,
+      amount: data.amount,
+      date: new Date(data.date),
+    });
     if (isEditing) {
       expensesCtx.updateExpense(editedExpenseId, {
-        description: "Test!!!!!",
-        amount: 29.99,
-        date: new Date("2022-04-20"),
+        description: data.description,
+        amount: data.amount,
+        date: new Date(data.date),
       });
     } else {
       expensesCtx.addExpense({
-        description: "Test!!!!!",
-        amount: 29.99,
-        date: new Date("2022-04-20"),
+        description: data.description,
+        amount: data.amount,
+        date: new Date(data.date),
       });
     }
     navigation.goBack();
@@ -47,14 +53,14 @@ const ManageExpenseScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttons}>
-        <Button style={styles.button} mode={"flat"} onPress={cancelHandler}>
-          Cancel
-        </Button>
-        <Button style={styles.button} onPress={confirmHandler}>
-          {isEditing ? "Update" : "Add"}
-        </Button>
-      </View>
+      {!isEditing && (
+        <ExpenseForm
+          onSubmit={confirmHandler}
+          onCancel={cancelHandler}
+          submitButtonLabel={isEditing ? "Update" : "Add"}
+        />
+      )}
+
       {isEditing && (
         <View style={styles.deleteContainer}>
           <IconButton
@@ -82,14 +88,5 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderTopColor: GLOBAL_STYLES.colors.primary200,
     alignItems: "center",
-  },
-  buttons: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    minWidth: 120,
-    marginHorizontal: 8,
   },
 });
