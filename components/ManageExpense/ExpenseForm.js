@@ -53,9 +53,6 @@ const ExpenseForm = ({ onCancel, onSubmit, submitButtonLabel }) => {
           style={styles.inputRow}
           textInputConfig={{
             keyboardType: "decimal-pad",
-            // onChangeText: (value) => {
-            //   inputChangeHandler("CHANGE_AMOUNT", value);
-            // },
             onChangeText: inputChangeHandler.bind(this, "CHANGE_AMOUNT"),
           }}
         />
