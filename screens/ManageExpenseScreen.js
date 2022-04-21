@@ -62,13 +62,20 @@ const ManageExpenseScreen = ({ route, navigation }) => {
       )}
 
       {isEditing && (
-        <View style={styles.deleteContainer}>
-          <IconButton
-            icon={"trash"}
-            color={GLOBAL_STYLES.colors.error500}
-            size={36}
-            onPress={deleteExpenseHandler}
+        <View>
+          <ExpenseForm
+            onSubmit={confirmHandler}
+            onCancel={cancelHandler}
+            submitButtonLabel={isEditing ? "Update" : "Add"}
           />
+          <View style={styles.deleteContainer}>
+            <IconButton
+              icon={"trash"}
+              color={GLOBAL_STYLES.colors.error500}
+              size={36}
+              onPress={deleteExpenseHandler}
+            />
+          </View>
         </View>
       )}
     </View>
